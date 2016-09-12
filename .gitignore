@@ -1,0 +1,6 @@
+# System Files
+.DS_Store
+
+# NPM Files
+**/node_modules
+**/*.log
