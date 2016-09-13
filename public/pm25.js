@@ -77,6 +77,19 @@
     })
   }
 
+  // 城市PM2.5日平均值
+  function getCitiesAvg(start, end, cb) {
+    var url = urlFormatter('AVZa1KdFwe2Jxq0nEb03', {
+      PRODUCT_KEY: 'pk1',
+      FROM_TIMESTAMP_MILLIS: start,
+      TO_TIMESTAMP_MILLIS: end
+    })
+
+    $.get(url, function(res) {
+      cb(res)
+    })
+  }
+
   function buildDeviceAvgChart(res) {
     var buckets = res.aggregations.date.buckets
     var dates = buckets.map(function(date) {
@@ -150,6 +163,35 @@
     })
   }
 
+  function buildCitiesAvgChart(res) {
+    var buckets = res.aggregations.city.buckets
+    var cities = buckets.map(function(bucket) {
+      return bucket.key
+    })
+    var outDoorData = buckets.map(function(bucket) {
+      return bucket.pm25_outdoor_avg.value
+    })
+    var inDoorData = buckets.map(function(bucket) {
+      return bucket.pm25_indoor_avg.value
+    })
+    var ctx = document.getElementById('c4')
+    var chart4 = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: cities,
+        datasets: [{
+          label: '室外',
+          data: outDoorData,
+          backgroundColor: '#F1C40F'
+        }, {
+          label: '室内',
+          data: inDoorData,
+          backgroundColor: '#2ECC71'
+        }]
+      }
+    })
+  }
+
 
 
   $(function() {
@@ -172,23 +214,29 @@
       var $this = $(this)
       var startVal = $this.find('input[name=start]').val()
       var endVal = $this.find('input[name=end]').val()
-
       getNationalRank(getTime(startVal), getTime(endVal) + oneDay, buildNationalRankChart)
     }).trigger('changeDate')
 
     // chart3
-    var $citySelect = $('#chart3-select')
-    var $datepicker3 = $('#datepicker3')
-    $datepicker3.datepicker({
+    $('#datepicker3').datepicker({
       format: 'yyyy/mm/dd',
       autoclose: true
     }).on('changeDate', function() {
       var $this = $(this)
       var startVal = $this.find('input[name=start]').val()
       var endVal = $this.find('input[name=end]').val()
-      // var city = $citySelect.val()
-
       getCityRank(getTime(startVal), getTime(endVal) + oneDay, 'guangzhou', buildCityRankChart)
+    }).trigger('changeDate')
+
+    // chart4
+    $('#datepicker4').datepicker({
+      format: 'yyyy/mm/dd',
+      autoclose: true
+    }).on('changeDate', function() {
+      var $this = $(this)
+      var startVal = $this.find('input[name=start]').val()
+      var endVal = $this.find('input[name=end]').val()
+      getCitiesAvg(getTime(startVal), getTime(endVal) + oneDay, buildCitiesAvgChart)
     }).trigger('changeDate')
   })
 }(jQuery)
