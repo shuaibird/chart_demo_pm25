@@ -15,8 +15,8 @@
   // 设备PM2.5日平均值
   function getDeviceAvg(start, end, cb) {
     var url = urlFormatter('AVZa1KdFwe2Jxq0nEb02', {
-      PRODUCT_KEY: "pk1",
-      DID: "did1",
+      PRODUCT_KEY: '8ab607683fa14e58aa17c6ed95b34556',
+      DID: 'WMJpRTHfXDqqtU94ymidjL',
       FROM_TIMESTAMP_MILLIS: start,
       TO_TIMESTAMP_MILLIS: end
     })
