@@ -5,13 +5,45 @@
   <title></title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="dependencies/bootstrap.min.css">
+  <link rel="stylesheet" href="dependencies/bootstrap-datepicker3.min.css">
 </head>
 
 <body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <div class="row">
+              <div class="col-md-8">
+                asdasd
+              </div>
+
+              <div class="col-md-4">
+                <div class="input-daterange input-group" id="datepicker1">
+                  <input type="text" class="input-sm form-control" name="start" value="2016/09/10"/>
+                  <span class="input-group-addon">to</span>
+                  <input type="text" class="input-sm form-control" name="end" value="2016/09/11"/>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+          <div class="panel-body">
+            <canvas id="c1"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
   
   <script src="dependencies/jquery.min.js"></script>
   <script src="dependencies/bootstrap.min.js"></script>
   <script src="dependencies/Chart.min.js"></script>
+  <script src="dependencies/bootstrap-datepicker.min.js"></script>
   <script src="pm25.js"></script>
 </body>
 </html>
