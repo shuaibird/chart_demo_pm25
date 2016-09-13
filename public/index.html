@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="dependencies/bootstrap.min.css">
   <link rel="stylesheet" href="dependencies/bootstrap-datepicker3.min.css">
+  <link rel="stylesheet" href="pm25.css">
 </head>
 
 <body>
@@ -22,23 +23,73 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-12">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <div class="row">
-                  <div class="col-md-6">
-                    设备PM2.5日平均值
-                  </div>
-                  <div class="col-md-6">
-                    <div class="input-daterange input-group" id="datepicker1">
-                      <input type="text" class="input-sm form-control" name="start" value="2016/09/10">
-                      <span class="input-group-addon">to</span>
-                      <input type="text" class="input-sm form-control" name="end" value="2016/09/11">
+            <div class="chart-block">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <div class="row">
+                    <div class="col-md-8">
+                      设备PM2.5日平均值
+                    </div>
+                    <div class="col-md-4">
+                      <div class="input-daterange input-group" id="datepicker1">
+                        <input type="text" class="input-sm form-control" name="start" value="2016/09/10">
+                        <span class="input-group-addon">to</span>
+                        <input type="text" class="input-sm form-control" name="end" value="2016/09/11">
+                      </div>
+                    </div>
+                  </div>      
+                </div>
+                <div class="panel-body">
+                  <canvas id="c1"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="chart-block">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <div class="row">
+                    <div class="col-md-6">
+                      全国室内PM2.5排名百分比
+                    </div>
+                    <div class="col-md-6">
+                      <div class="input-daterange input-group" id="datepicker2">
+                        <input type="text" class="input-sm form-control" name="start" value="2016/09/10">
+                        <span class="input-group-addon">to</span>
+                        <input type="text" class="input-sm form-control" name="end" value="2016/09/11">
+                      </div>
                     </div>
                   </div>
-                </div>      
+                </div>
+                <div class="panel-body">
+                  <canvas id="c2"></canvas>
+                </div>
               </div>
-              <div class="panel-body">
-                <canvas id="c1"></canvas>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div class="chart-block">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <div class="row">
+                    <div class="col-md-6">
+                      指定城市室内PM2.5排名百分比
+                    </div>
+                    <div class="col-md-6">
+                      <div class="input-daterange input-group" id="datepicker3">
+                        <input type="text" class="input-sm form-control" name="start" value="2016/09/10">
+                        <span class="input-group-addon">to</span>
+                        <input type="text" class="input-sm form-control" name="end" value="2016/09/11">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel-body">
+                  <canvas id="c3"></canvas>
+                </div>
               </div>
             </div>
           </div>

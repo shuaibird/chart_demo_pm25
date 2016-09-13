@@ -11,17 +11,69 @@
     return new Date(timeStamp).getTime()
   }
 
-
   // 设备PM2.5日平均值
   function getDeviceAvg(start, end, cb) {
     var url = urlFormatter('AVZa1KdFwe2Jxq0nEb02', {
-      PRODUCT_KEY: "pk1",
-      DID: "did1",
+      PRODUCT_KEY: 'pk1',
+      DID: 'did1',
       FROM_TIMESTAMP_MILLIS: start,
       TO_TIMESTAMP_MILLIS: end
     })
     $.get(url, function(res) {
       cb(res)
+    })
+  }
+
+  // 设备PM2.5平均值（单个）
+  function getSingleDeviceAvg(start, end, cb) {
+    var url = urlFormatter('AVZa1KdFwe2Jxq0nEb01', {
+      PRODUCT_KEY: 'pk1',
+      DID: 'did1',
+      FROM_TIMESTAMP_MILLIS: start,
+      TO_TIMESTAMP_MILLIS: end
+    })
+    $.get(url, function(res) {
+      cb(res)
+    })
+  }
+
+  // 全国室内PM2.5排名百分比
+  function getNationalRank(start, end, cb) {
+    getSingleDeviceAvg(start, end, function(res) {
+      var indoorVal = res.aggregations.pm25_indoor_avg.value
+      var url = urlFormatter('AVZa1KdFwe2Jxq0nEb04', {
+        PRODUCT_KEY: 'pk1',
+        FROM_TIMESTAMP_MILLIS: start,
+        TO_TIMESTAMP_MILLIS: end,
+        PM25_VALUE: indoorVal
+      })
+      $.get(url, function(res) {
+        var defeat = 100 - res.aggregations.percentile_ranks.values[indoorVal]
+        cb({
+          defeat: defeat
+        })
+      })
+    })
+  }
+
+  // 指定城市室内PM2.5排名百分比
+  function getCityRank(start, end, city, cb) {
+    getSingleDeviceAvg(start, end, function(res) {
+      var indoorVal = res.aggregations.pm25_indoor_avg.value
+      var url = urlFormatter('AVZa1KdFwe2Jxq0nEb05', {
+        PRODUCT_KEY: 'pk1',
+        FROM_TIMESTAMP_MILLIS: start,
+        TO_TIMESTAMP_MILLIS: end,
+        PM25_VALUE: indoorVal,
+        CITY: city
+      })
+
+      $.get(url, function(res) {
+        var defeat = 100 - res.aggregations.percentile_ranks.values[indoorVal]
+        cb({
+          defeat: defeat
+        })
+      })
     })
   }
 
@@ -39,7 +91,7 @@
     })
 
     var ctx = document.getElementById('c1')
-    var myChart = new Chart(ctx, {
+    var chart1 = new Chart(ctx, {
       type: 'line',
       data: {
         labels: dates,
@@ -60,9 +112,49 @@
     })
   }
 
+  function buildNationalRankChart(res) {
+    var ctx = document.getElementById('c2')
+    var chart2 = new Chart(ctx,{
+      type: 'pie',
+      data: {
+        labels: ['打败的用户', '所有用户'],
+        datasets: [
+          {
+            data: [res.defeat.toFixed(2), 100],
+            backgroundColor: [
+              '#E74C3C',
+              '#3498DB'
+            ]
+          }
+        ]
+      }
+    })
+  }
+
+  function buildCityRankChart(res) {
+    var ctx = document.getElementById('c3')
+    var chart3 = new Chart(ctx,{
+      type: 'pie',
+      data: {
+        labels: ['打败的用户', '所有用户'],
+        datasets: [
+          {
+            data: [res.defeat.toFixed(2), 100],
+            backgroundColor: [
+              '#E74C3C',
+              '#3498DB'
+            ]
+          }
+        ]
+      }
+    })
+  }
+
+
 
   $(function() {
-    $('.input-daterange').datepicker({
+    // chart1
+    $('#datepicker1').datepicker({
       format: 'yyyy/mm/dd',
       autoclose: true
     }).on('changeDate', function() {
@@ -70,6 +162,33 @@
       var startVal = $this.find('input[name=start]').val()
       var endVal = $this.find('input[name=end]').val()
       getDeviceAvg(getTime(startVal), getTime(endVal) + oneDay, buildDeviceAvgChart)
+    }).trigger('changeDate')
+
+    // chart2
+    $('#datepicker2').datepicker({
+      format: 'yyyy/mm/dd',
+      autoclose: true
+    }).on('changeDate', function() {
+      var $this = $(this)
+      var startVal = $this.find('input[name=start]').val()
+      var endVal = $this.find('input[name=end]').val()
+
+      getNationalRank(getTime(startVal), getTime(endVal) + oneDay, buildNationalRankChart)
+    }).trigger('changeDate')
+
+    // chart3
+    var $citySelect = $('#chart3-select')
+    var $datepicker3 = $('#datepicker3')
+    $datepicker3.datepicker({
+      format: 'yyyy/mm/dd',
+      autoclose: true
+    }).on('changeDate', function() {
+      var $this = $(this)
+      var startVal = $this.find('input[name=start]').val()
+      var endVal = $this.find('input[name=end]').val()
+      // var city = $citySelect.val()
+
+      getCityRank(getTime(startVal), getTime(endVal) + oneDay, 'guangzhou', buildCityRankChart)
     }).trigger('changeDate')
   })
 }(jQuery)
