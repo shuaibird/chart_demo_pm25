@@ -8,5 +8,10 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "chart.js": "^2.2.2",
+    "express": "^4.14.0",
+    "superagent": "^2.2.0"
+  }
 }
