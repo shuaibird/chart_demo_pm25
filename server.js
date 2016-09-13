@@ -1,3 +1,4 @@
+const PORT = 8080
 const HOST = 'http://119.29.166.125:8080'
 
 var express = require('express')
@@ -12,4 +13,4 @@ request
     console.log(res.body)
   })
 
-app.listen(8080);
+app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
