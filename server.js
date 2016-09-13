@@ -21,9 +21,7 @@ apiRouter
 
     request
       .get(`${HOST}${DATA_API}/${view}?data=${dataQuery}`)
-      .end((err, response) => {
-        res.json(response.body)
-      })
+      .end((err, response) => res.json(response.body))
   })
 
 
