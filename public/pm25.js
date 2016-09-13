@@ -1,6 +1,18 @@
 +function($) {
+  var oneDay = 1000 * 60 * 60 * 24
+
+  function urlFormatter(viewId, data) {
+    return '/dataapi/view/v2/' + viewId + '?data=' + JSON.stringify(data)
+  }
+
   function getDeviceAvg(start, end, cb) {
-    $.get('/dataapi/view/v2/AVZa1KdFwe2Jxq0nEb02?data={"PRODUCT_KEY":"pk1","DID":"did1","FROM_TIMESTAMP_MILLIS":' + start + ',"TO_TIMESTAMP_MILLIS":' + end + '}', function(res) {
+    var url = urlFormatter('AVZa1KdFwe2Jxq0nEb02', {
+      PRODUCT_KEY: "pk1",
+      DID: "did1",
+      FROM_TIMESTAMP_MILLIS: start,
+      TO_TIMESTAMP_MILLIS: end
+    })
+    $.get(url, function(res) {
       cb(res)
     })
   }
@@ -43,7 +55,6 @@
 
 
   $(function() {
-
     $('.input-daterange').datepicker({
       format: 'yyyy/mm/dd',
       autoclose: true
@@ -51,8 +62,7 @@
       var $this = $(this)
       var startVal = $this.find('input[name="start"]').val()
       var endVal = $this.find('input[name="end"]').val()
-
-      getDeviceAvg(new Date(startVal).getTime(), new Date(endVal).getTime()+ (1000 * 60 * 60 * 24), buildChart1)
+      getDeviceAvg(new Date(startVal).getTime(), new Date(endVal).getTime() + oneDay, buildChart1)
     }).trigger('changeDate')
   })
 }(jQuery)
