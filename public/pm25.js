@@ -9,7 +9,6 @@
 
 
   // general helper variables & functions
-  var oneDay = 1000 * 60 * 60 * 24
   var red = '#E74C3C'
   var blue = '#3498DB'
   var transparent = 'rgba(0,0,0,0)'
@@ -34,6 +33,7 @@
       var $this = $(this)
       var startVal = $this.find('input[name=start]').val()
       var endVal = $this.find('input[name=end]').val()
+      var oneDay = 1000 * 60 * 60 * 24
       fetchData(getTime(startVal), getTime(endVal) + oneDay, buildChart)
     }).trigger('changeDate')
   }
@@ -213,6 +213,7 @@
     })
   }
 
+
   // renderChart
   $(function() {
     renderChart('#datepicker1', getDeviceAvg, buildDeviceAvgChart)
@@ -220,4 +221,5 @@
     renderChart('#datepicker3', getCityRank, buildCityRankChart)
     renderChart('#datepicker4', getCitiesAvg, buildCitiesAvgChart)
   })
+  
 }(jQuery)
