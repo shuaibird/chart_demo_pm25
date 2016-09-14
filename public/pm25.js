@@ -2,8 +2,8 @@
 
   // config object
   var config = {
-    pk: 'pk1',
-    did: 'did1',
+    pk: '8ab607683fa14e58aa17c6ed95b34556',
+    did: 'WMJpRTHfXDqqtU94ymidjL',
     city: 'guangzhou'
   }
 
