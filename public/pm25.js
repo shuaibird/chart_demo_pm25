@@ -172,12 +172,10 @@
       var $this = $(this)
       var startVal = $this.find('input[name=start]').val()
       var endVal = $this.find('input[name=end]').val()
-
       getNationalRank(getTime(startVal), getTime(endVal) + oneDay, buildNationalRankChart)
     }).trigger('changeDate')
 
     // chart3
-    var $citySelect = $('#chart3-select')
     var $datepicker3 = $('#datepicker3')
     $datepicker3.datepicker({
       format: 'yyyy/mm/dd',
@@ -186,8 +184,6 @@
       var $this = $(this)
       var startVal = $this.find('input[name=start]').val()
       var endVal = $this.find('input[name=end]').val()
-      // var city = $citySelect.val()
-
       getCityRank(getTime(startVal), getTime(endVal) + oneDay, 'guangzhou', buildCityRankChart)
     }).trigger('changeDate')
   })
