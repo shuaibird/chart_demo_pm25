@@ -105,7 +105,7 @@
   // 城市PM2.5日平均值
   function getCitiesAvg(start, end, cb) {
     var url = urlFormatter(3, {
-      PRODUCT_KEY: 'pk1',
+      PRODUCT_KEY: config.pk,
       FROM_TIMESTAMP_MILLIS: start,
       TO_TIMESTAMP_MILLIS: end
     })
