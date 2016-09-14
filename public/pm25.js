@@ -7,6 +7,14 @@
     city: 'guangzhou'
   }
 
+  var citiesNameTranslate = {
+    beijing: '北京',
+    guangzhou: '广州',
+    shanghai: '上海',
+    shenzhen: '深圳',
+    shijiazhuang: '石家庄'
+  }
+
 
   // general helper variables & functions
   var red = '#E74C3C'
@@ -187,7 +195,8 @@
   function buildCitiesAvgChart(res) {
     var buckets = res.aggregations.city.buckets
     var cities = buckets.map(function(bucket) {
-      return bucket.key
+      var key = bucket.key
+      return (key in citiesNameTranslate) ? citiesNameTranslate[key] : key
     })
     var outDoorData = buckets.map(function(bucket) {
       return bucket.pm25_outdoor_avg.value
