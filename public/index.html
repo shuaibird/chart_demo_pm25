@@ -98,7 +98,33 @@
     </div>
 
     <div class="tab-pane" id="enterprise">
-      <h1>hello</h1>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="chart-block">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <div class="row">
+                    <div class="col-md-8">
+                      城市PM2.5日平均值
+                    </div>
+                    <div class="col-md-4">
+                      <div class="input-daterange input-group" id="datepicker4">
+                        <input type="text" class="input-sm form-control" name="start" value="2016/09/10">
+                        <span class="input-group-addon">to</span>
+                        <input type="text" class="input-sm form-control" name="end" value="2016/09/11">
+                      </div>
+                    </div>
+                  </div>      
+                </div>
+                <div class="panel-body">
+                  <canvas id="c4"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   
