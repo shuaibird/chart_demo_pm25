@@ -79,9 +79,7 @@
       })
       $.get(url, function(res) {
         var defeat = 100 - res.aggregations.percentile_ranks.values[indoorVal]
-        cb({
-          defeat: defeat
-        })
+        cb({defeat: defeat})
       })
     })
   }
@@ -97,12 +95,9 @@
         PM25_VALUE: indoorVal,
         CITY: config.city
       })
-
       $.get(url, function(res) {
         var defeat = 100 - res.aggregations.percentile_ranks.values[indoorVal]
-        cb({
-          defeat: defeat
-        })
+        cb({defeat: defeat})
       })
     })
   }
@@ -135,7 +130,6 @@
     var inDoorData = buckets.map(function(bucket) {
       return bucket.pm25_indoor_avg.value
     })
-
     var ctx = document.getElementById('c1')
     var chart = new Chart(ctx, {
       type: 'line',
